@@ -23,6 +23,8 @@ async function run(){
         const serviceCollection =client.db('traveldb').collection('services');
         const reviewCollection = client.db('traveldb').collection('reviews');
 
+       // get condition  data service Api
+
         app.get('/service', async(req,res)=>{
           const  query = {}
           const cursor = serviceCollection.find(query);
@@ -31,7 +33,8 @@ async function run(){
             res.send(result)
     })
 
-
+  // get service Api
+ 
         app.get('/services', async(req,res)=>{
           const  query = {}
           const cursor = serviceCollection.find(query);
@@ -59,6 +62,7 @@ app.post('/reviews', async (req,res)=>{
 })
 
 
+// post reviews Api
 
 app.get('/reviews',  async(req,res)=>{ 
             
@@ -76,6 +80,7 @@ app.get('/reviews',  async(req,res)=>{
   })
 
 
+// post service Api
 
 app.post('/services', async(req,res)=>{
         
@@ -85,8 +90,8 @@ app.post('/services', async(req,res)=>{
  res.send(result)
 
 })
-
-
+ 
+//  Reviews  Api delete method use
 
  app.delete('/reviews/:id', async (req,res)=>{
    
