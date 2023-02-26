@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 5000 ;
 
 
-// middele were
+// middele were use
 app.use(cors());
 app.use(express.json())
 
@@ -53,7 +53,7 @@ async function run(){
         res.send(result);
 })
 
-
+// post reviews Api
 app.post('/reviews', async (req,res)=>{
 
      const review = req.body;
@@ -62,7 +62,7 @@ app.post('/reviews', async (req,res)=>{
 })
 
 
-// post reviews Api
+// get reviews Api
 
 app.get('/reviews',  async(req,res)=>{ 
             
