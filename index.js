@@ -17,6 +17,33 @@ app.use(express.json())
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.o15tjkl.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+ 
+// jwt veify for use
+
+function verifyToken(req,res,next){
+
+   const headered = req.headers.authoriztion;
+   if(!headered){
+       return res.status(401).send({message:'unauthoriztion access'})
+   }
+
+   const token = headered.split(' ')[1]
+
+   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function(error,decoded){
+    if(error){
+      return res.status(401).send({message:'unauthoriztion access'})
+    }
+    req.decoded = decoded
+    next()
+   })
+}
+
+
+
+
+
+
+
 async function run(){
 
     try{ 
@@ -24,6 +51,15 @@ async function run(){
   
         const serviceCollection =client.db('traveldb').collection('services');
         const reviewCollection = client.db('traveldb').collection('reviews');
+
+        app.post('/jwt',(req,res)=>{
+          const persons = req.body;
+          const token = jwt.sign(persons, process.env.ACCESS_TOKEN_SECRET, { expiresIn:'7d'})
+ 
+             res.send({token})
+ 
+           })
+
 
        // get condition  data service Api
 
