@@ -66,7 +66,7 @@ async function run(){
         app.get('/service', async(req,res)=>{
           const  query = {}
           const cursor = serviceCollection.find(query);
-          const result = await cursor.limit(3).toArray();
+          const result = await cursor.sort({_id:-1}).limit(3).toArray();
 
             res.send(result)
     })
@@ -99,6 +99,16 @@ app.post('/reviews', async (req,res)=>{
      res.send(result)
 })
 
+
+// get reviews id Api 
+
+ app.get('/reviews/:id', async(req,res)=>{
+    
+    const id = req.params.id;
+    const query = {_id : new ObjectId(id)}
+    const result = await reviewCollection.findOne(query)
+    res.send(result)
+ })
 
 // get reviews Api
 
